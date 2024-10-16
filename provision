@@ -1,0 +1,35 @@
+cluster_name=lab
+echo "Creating cluster $cluster_name"
+
+eksctl create cluster --name $cluster_name --region ap-southeast-1 --nodegroup-name g1 --node-type t2.micro --nodes 4
+oidc_id=$(aws eks describe-cluster --name $cluster_name --query "cluster.identity.oidc.issuer" --output text | cut -d '/' -f 5)
+echo "Your OIDC key $oidc_id"
+eksctl utils associate-iam-oidc-provider --cluster $cluster_name --approve
+
+echo "Applying IAM Policy"
+curl -O https://raw.githubusercontent.com/kubernetes-sigs/aws-load-balancer-controller/v2.5.4/docs/install/iam_policy.json
+aws iam create-policy \
+    --policy-name AWSLoadBalancerControllerIAMPolicy \
+    --policy-document file://iam_policy.json
+
+eksctl create iamserviceaccount \
+  --cluster=$cluster_name \
+  --namespace=kube-system \
+  --name=aws-load-balancer-controller \
+  --role-name AmazonEKSLoadBalancerControllerRole \
+  --attach-policy-arn=arn:aws:iam::026090510607:policy/AWSLoadBalancerControllerIAMPolicy \
+  --approve \
+  --override-existing-serviceaccounts
+
+echo "Updating helm charts"
+helm repo add eks https://aws.github.io/eks-charts
+helm repo update eks
+
+echo "Installing aws-load-balancer-controller with helm"
+helm install aws-load-balancer-controller eks/aws-load-balancer-controller \
+  -n kube-system \
+  --set clusterName=$cluster_name \
+  --set serviceAccount.create=false \
+  --set serviceAccount.name=aws-load-balancer-controller \
+  --set region=ap-southeast-1 \
+  --set vpcId=vpc-0affb681709fde913 
