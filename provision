@@ -1,3 +1,4 @@
+#!/bin/sh
 cluster_name=lab
 echo "Creating cluster $cluster_name"
 
