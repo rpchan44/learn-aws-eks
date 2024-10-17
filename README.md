@@ -7,7 +7,7 @@ I'm going to update this repository from time to time
 
 ## BOOTSTRAPING
 
-clone this repository run both shell scripts located at scripts folder then finally <b>chmod +x provision; ./provision</b>
+clone this repository run both shell scripts located at scripts folder then update provision script to match on your environment and finally <b>chmod +x provision; ./provision</b>
 
 ## TODO
 
