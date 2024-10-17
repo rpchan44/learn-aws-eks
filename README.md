@@ -8,7 +8,8 @@ I'm going to update this repository from time to time
 ## BOOTSTRAPING
 
 clone this repository run both shell scripts located at scripts folder then update provision script to match on your environment
-
+[cloudshell-user@ip-10-132-11-60]$ git clone https://github.com/rpchan44/learn-aws-eks.git </br>
+[cloudshell-user@ip-10-132-11-60]$ cd learn-aws-eks </br>
 [cloudshell-user@ip-10-132-11-60 learn-aws-eks]$ cd scripts/</br>
 [cloudshell-user@ip-10-132-11-60 scripts]$ sh get_eksctl.sh </br>
 eksctl_Linux_amd64.tar.gz: OK </br>
