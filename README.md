@@ -7,8 +7,8 @@ I'm going to update this repository from time to time
 
 ## TODO
 
-PODS to outside world integration like RDS
-PODS persistent volumes best practices
+PODS to outside world integration like RDS </br>
+PODS persistent volumes best practices </br>
 CLI cheat sheets
 
 ## Pre-requisite and assumption
