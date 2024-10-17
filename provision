@@ -34,3 +34,6 @@ helm install aws-load-balancer-controller eks/aws-load-balancer-controller \
   --set serviceAccount.name=aws-load-balancer-controller \
   --set region=ap-southeast-1 \
   --set vpcId=vpc-0affb681709fde913 
+
+echo "Invoking tech stack"
+kubectl apply -f .
