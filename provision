@@ -1,5 +1,11 @@
 #!/bin/sh
-cluster_name=lab
+if [ "$#" -lt 2 ]; then
+            echo "Error!: usage $0 cluster_name aws_account"
+            exit 1
+fi
+cluster_name=$1
+account=$2
+
 echo "Creating cluster $cluster_name"
 
 ./eksctl create cluster --name $cluster_name --region ap-southeast-1 --nodegroup-name g1 --node-type t2.micro --nodes 4
@@ -18,7 +24,7 @@ aws iam create-policy \
   --namespace=kube-system \
   --name=aws-load-balancer-controller \
   --role-name AmazonEKSLoadBalancerControllerRole \
-  --attach-policy-arn=arn:aws:iam::026090510607:policy/AWSLoadBalancerControllerIAMPolicy \
+  --attach-policy-arn=arn:aws:iam::$account:policy/AWSLoadBalancerControllerIAMPolicy \
   --approve \
   --override-existing-serviceaccounts
 
