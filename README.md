@@ -3,6 +3,14 @@
 This is just for educational purposes, just barely scratch the surface using eksctl will make your life easier specially setting up the EKS cluster otherwise
 you are going to have an excruciating pain on setting it up which is a good thing if you want to know EKS better, you had been warned!!
 
+I'm going to update this repository from time to time
+
+## TODO
+
+PODS to outside world integration like RDS
+PODS persistent volumes best practices
+CLI cheat sheets
+
 ## Pre-requisite and assumption
 
 Contact AWS support and activate your cloudshell or setup your own environment to have kubectl / helm and eksctl install on your computer
