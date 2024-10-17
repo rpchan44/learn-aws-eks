@@ -5,6 +5,10 @@ you are going to have an excruciating pain on setting it up which is a good thin
 
 I'm going to update this repository from time to time
 
+## BOOTSTRAPING
+
+clone this repository run both shell scripts located at scripts folder then finally <b>chmod +x provision; ./provision</b>
+
 ## TODO
 
 PODS to outside world integration like RDS </br>
