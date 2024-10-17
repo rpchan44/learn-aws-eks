@@ -10,6 +10,10 @@ Contact AWS support and activate your cloudshell or setup your own environment t
 You need to configure your aws cli tools to with your Access and Secret key otherwise the userland tools won't be able to contact AWS this is important
 if you use cloudshell you don't have to do this
 
+The EKS cluster will be named "lab" and will be place in ap-southeast-1 (Singapore) and the nodegroup will be called "g1"
+
+If you need help just give me a shout!
+
 ```python
 # Your Access Key and Secret is only available after you enable and activate your account in AWS, it takes 24 hours so be patient
 # In your operating system terminal 'aws configure'
