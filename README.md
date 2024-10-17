@@ -19,8 +19,7 @@ CLI cheat sheets
 
 Contact AWS support and activate your cloudshell or setup your own environment to have kubectl / helm and eksctl install on your computer
 
-You need to configure your aws cli tools together with your Access and Secret key otherwise the userland tools won't be able to contact AWS this is important
-if you use cloudshell you don't have to do this
+You need to configure your aws cli tools together with your Access and Secret key otherwise the userland tools won't be work this is important if you use cloudshell you don't have to do this
 
 The EKS cluster will be named "lab" and will be place in ap-southeast-1 (Singapore) and the nodegroup will be called "g1"
 
