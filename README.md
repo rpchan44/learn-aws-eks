@@ -24,4 +24,4 @@ Default region name [None]: ap-southeast-1
 Default output format [None]: json
 
 ```
-always terminate your AWS eks after use this is a 4 worker nodes so expect a bill please setup your AWS Budget to a decent amount like 5 to 10 USD
+Always terminate your AWS eks after use this is a 4 worker nodes so expect a bill please setup your AWS Budget to a decent amount like 5 to 10 USD
