@@ -180,7 +180,7 @@ installFile() {
   tar xf "$HELM_TMP_FILE" -C "$HELM_TMP"
   HELM_TMP_BIN="$HELM_TMP/$OS-$ARCH/helm"
   echo "Preparing to install $BINARY_NAME into ${HELM_INSTALL_DIR}"
-  runAsRoot cp "$HELM_TMP_BIN" "$HELM_INSTALL_DIR/$BINARY_NAME"
+  cp "$HELM_TMP_BIN" "$HELM_INSTALL_DIR/$BINARY_NAME"
   echo "$BINARY_NAME installed into $HELM_INSTALL_DIR/$BINARY_NAME"
 }
 
