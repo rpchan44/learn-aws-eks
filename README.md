@@ -7,7 +7,7 @@ I'm going to update this repository from time to time
 
 ## BOOTSTRAPING
 
-clone this repository run both shell scripts located at scripts folder then update provision script to match on your environment
+clone this repository run both shell scripts located at scripts folder then update provision script to match on your environment</br>
 [cloudshell-user@ip-10-132-11-60]$ git clone https://github.com/rpchan44/learn-aws-eks.git </br>
 [cloudshell-user@ip-10-132-11-60]$ cd learn-aws-eks </br>
 [cloudshell-user@ip-10-132-11-60 learn-aws-eks]$ cd scripts/</br>
