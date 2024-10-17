@@ -9,18 +9,18 @@ I'm going to update this repository from time to time
 
 clone this repository run both shell scripts located at scripts folder then update provision script to match on your environment
 
-[cloudshell-user@ip-10-132-11-60 learn-aws-eks]$ cd scripts/
-[cloudshell-user@ip-10-132-11-60 scripts]$ sh get_eksctl.sh 
-eksctl_Linux_amd64.tar.gz: OK
-[cloudshell-user@ip-10-132-11-60 scripts]$ sh get_helm.sh 
-Downloading https://get.helm.sh/helm-v3.16.2-linux-amd64.tar.gz
-Verifying checksum... Done.
-Preparing to install helm into ..
-helm installed into ../helm
-[cloudshell-user@ip-10-132-11-60 scripts]$ cd ..
-[cloudshell-user@ip-10-132-11-60 learn-aws-eks]$ chmod +x provision 
-[cloudshell-user@ip-10-132-11-60 learn-aws-eks]$ ./provision 
-Error!: usage ./provision cluster_name aws_account region_name
+[cloudshell-user@ip-10-132-11-60 learn-aws-eks]$ cd scripts/</br>
+[cloudshell-user@ip-10-132-11-60 scripts]$ sh get_eksctl.sh </br>
+eksctl_Linux_amd64.tar.gz: OK </br>
+[cloudshell-user@ip-10-132-11-60 scripts]$ sh get_helm.sh </br>
+Downloading https://get.helm.sh/helm-v3.16.2-linux-amd64.tar.gz </br>
+Verifying checksum... Done.</br>
+Preparing to install helm into ..</br>
+helm installed into ../helm </br>
+[cloudshell-user@ip-10-132-11-60 scripts]$ cd .. </br>
+[cloudshell-user@ip-10-132-11-60 learn-aws-eks]$ chmod +x provision </br>
+[cloudshell-user@ip-10-132-11-60 learn-aws-eks]$ ./provision </br>
+Error!: usage ./provision cluster_name aws_account region_name </br>
 [cloudshell-user@ip-10-132-11-60 learn-aws-eks]$
 
 ## TODO
