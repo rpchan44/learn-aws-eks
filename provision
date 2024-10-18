@@ -59,7 +59,7 @@ aws iam create-role \
   --assume-role-policy-document file://aws-efs-csi-driver-trust-policy.json
 
 aws iam attach-role-policy \
-  --policy-arn arn:aws:iam::aws:policy/AmazonEFSCSIDriverPolicy \
+  --policy-arn arn:aws:iam::aws:policy/service-role/AmazonEFSCSIDriverPolicy \
   --role-name $efs_role
 
 ./eksctl create iamserviceaccount \
@@ -90,7 +90,7 @@ echo "Updating helm charts"
 ./helm repo update aws-efs-csi-driver
 
 echo "Installing aws-efs-csi-driver"
-./helm install aws-efs-csi-driver efs-csi-driver/efs-csi-driver \
+./helm install aws-efs-csi-driver \
   --namespace kube-system \
   --set controller.serviceAccount.create=false \
   --set controller.serviceAccount.name=efs-csi-controller-sa
