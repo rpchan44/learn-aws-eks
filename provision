@@ -71,7 +71,6 @@ aws iam attach-role-policy
   --approve \
   --override-existing-serviceaccounts
 
-
 ./eksctl create iamserviceaccount \
   --cluster=$cluster_name \
   --namespace=kube-system \
