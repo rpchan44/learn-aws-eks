@@ -10,7 +10,7 @@ cluster_name=$1
 account=$2
 region=$3
 node=$4
-efs_role=AmazonEKS_EFS_CSI_DriverRole
+efs_role="AmazonEKS_EFS_CSI_DriverRole"
 
 echo "Creating cluster $cluster_name with AWS Account $account in region $region"
 echo "are you sure? (y/n)"
