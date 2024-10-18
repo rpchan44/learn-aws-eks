@@ -31,7 +31,7 @@ PODS persistent volumes with efs </br>
 CLI cheat sheets
 
 ## RESEARCH and Validation phase
-Installing cni efs driver using helm </br>
+Installing efs-csi driver using helm</br>
 
 ## Pre-requisite and assumption
 
