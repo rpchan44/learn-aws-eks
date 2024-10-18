@@ -62,12 +62,12 @@ aws iam attach-role-policy \
   --role-name $efs_role
 
 ./eksctl create iamserviceaccount \
-  --name efs-csi-controller-sa \
-  --namespace kube-system \
-  --cluster $cluster_name \
-  --role-name $efs_role \
+  --cluster=$cluster_name \
+  --namespace=kube-system \
+  --name=efs-csi-controller-sa \
+  --role-name=$efs_role \
+  --attach-policy-arn=arn:aws:iam::aws:policy/service-role/$efs_role \
   --role-only \
-  --attach-policy-arn arn:aws:iam::aws:policy/service-role/$efs_role \
   --approve \
   --override-existing-serviceaccounts
 
