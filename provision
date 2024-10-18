@@ -54,7 +54,7 @@ aws iam create-policy \
 
 aws iam create-role \
   --role-name AmazonEKS_EFS_CSI_DriverRole \
-  --assume-role-policy-document file://"aws-efs-csi-driver-trust-policy.json"
+  --assume-role-policy-document file://aws-efs-csi-driver-trust-policy.json
 
 aws iam attach-role-policy \
   --policy-arn arn:aws:iam::aws:policy/service-role/AmazonEFSCSIDriverPolicy \
