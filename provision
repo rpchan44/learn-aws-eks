@@ -9,7 +9,7 @@ cluster_name=$1
 account=$2
 region=$3
 
-echo "Creating cluster $cluster_name"
+echo "Creating cluster $cluster_name with AWS Account $account in region $region"
 
 ./eksctl create cluster --name $cluster_name --region $region --nodegroup-name g1 --node-type t2.micro --nodes 4
 oidc_id=$(aws eks describe-cluster --name $cluster_name --query "cluster.identity.oidc.issuer" --output text | cut -d '/' -f 5)
