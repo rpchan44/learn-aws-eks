@@ -67,7 +67,7 @@ aws iam attach-role-policy
   --cluster $cluster_name \
   --role-name $efs_role \
   --role-only \
-  --attach-policy-arn arn:aws:iam::$account:policy/service-role/$efs_role \
+  --attach-policy-arn arn:aws:iam::aws:policy/service-role/$efs_role \
   --approve \
   --override-existing-serviceaccounts
 
