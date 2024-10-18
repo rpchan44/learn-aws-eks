@@ -47,7 +47,7 @@ role_name="AmazonEKS_EFS_CSI_DriverRole"
     --role-name $role_name \
     --role-only \
     --attach-policy-arn arn:aws:iam::aws:policy/service-role/AmazonEFSCSIDriverPolicy \
-    --approve
+    --approve \
     --override-existing-serviceaccounts
 
 TRUST_POLICY=$(aws iam get-role --role-name $role_name --query 'Role.AssumeRolePolicyDocument' | \
