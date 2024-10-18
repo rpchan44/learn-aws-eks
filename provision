@@ -10,7 +10,8 @@ cluster_name=$1
 account=$2
 region=$3
 node=$4
-efs_role="AmazonEKS_EFS_CSI_DriverRole"
+efs_role=AmazonEKS_EFS_CSI_DriverRole
+
 echo "Creating cluster $cluster_name with AWS Account $account in region $region"
 echo "are you sure? (y/n)"
 read opt
@@ -26,26 +27,6 @@ oidc_id=$(aws eks describe-cluster --name $cluster_name --query "cluster.identit
 ./eksctl utils associate-iam-oidc-provider --cluster $cluster_name --approve
 echo "Phase #1 - IAM Policy - press enter key to cotinue"
 read x
-cat <<EOF > aws-efs-csi-driver-trust-policy.json
-{
-  "Version": "2012-10-17",
-  "Statement": [
-    {
-      "Effect": "Allow",
-      "Principal": {
-        "Federated": "arn:aws:iam::$account:oidc-provider/oidc.eks.$region.amazonaws.com/id/$oidc_id"
-      },
-      "Action": "sts:AssumeRoleWithWebIdentity",
-      "Condition": {
-        "StringLike": {
-          "oidc.eks.$region.amazonaws.com/id/$oidc_id:sub": "system:serviceaccount:kube-system:efs-csi-*",
-          "oidc.eks.$region.amazonaws.com/id/$oidc_id:aud": "sts.amazonaws.com"
-        }
-      }
-    }
-  ]
-}
-EOF
 
 echo "Applying IAM Policy"
 curl -O https://raw.githubusercontent.com/kubernetes-sigs/aws-load-balancer-controller/v2.5.4/docs/install/iam_policy.json
@@ -54,23 +35,17 @@ aws iam create-policy \
     --policy-name AWSLoadBalancerControllerIAMPolicy \
     --policy-document file://iam_policy.json
 
-aws iam create-role \
-  --role-name $efs_role \
-  --assume-role-policy-document file://aws-efs-csi-driver-trust-policy.json
-
-#aws iam attach-role-policy \
-#  --policy-arn arn:aws:iam::aws:policy/service-role/AmazonEFSCSIDriverPolicy \
-#  --role-name $efs_role
-
 ./eksctl create iamserviceaccount \
-  --cluster=$cluster_name \
-  --namespace=kube-system \
-  --name=efs-csi-controller-sa \
-  --role-name=$efs_role \
-  --attach-policy-arn=arn:aws:iam::aws:policy/service-role/AmazonEFSCSIDriverPolicy \
-  --role-only \
-  --approve \
-  --override-existing-serviceaccounts
+    --name efs-csi-controller-sa \
+    --namespace kube-system \
+    --cluster $cluster_name \
+    --role-name $efs_role \
+    --role-only \
+    --attach-policy-arn arn:aws:iam::aws:policy/service-role/AmazonEFSCSIDriverPolicy \
+    --approve
+TRUST_POLICY=$(aws iam get-role --role-name $efs_role --query 'Role.AssumeRolePolicyDocument' | \
+    sed -e 's/efs-csi-controller-sa/efs-csi-*/' -e 's/StringEquals/StringLike/')
+aws iam update-assume-role-policy --role-name $efs_role --policy-document "$TRUST_POLICY"
 
 ./eksctl create iamserviceaccount \
   --cluster=$cluster_name \
