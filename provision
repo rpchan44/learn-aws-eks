@@ -86,7 +86,7 @@ echo "Updating helm charts"
 ./helm repo update eks
 
 echo "Installing aws-efs-csi-driver"
-./eksctl create addon --name aws-efs-csi-drive \
+./eksctl create addon --name aws-efs-csi-driver \
    --cluster=$cluster_name \ 
    --region=$region \
    --service-account-role-arn=arn:aws:iam::$account:role/$efs_role \
