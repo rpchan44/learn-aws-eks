@@ -46,7 +46,7 @@ role_name="AmazonEKS_EFS_CSI_DriverRole"
     --cluster $cluster_name \
     --role-name $role_name \
     --role-only \
-    --attach-policy-arn arn:aws:iam::aws:policy/service-role/AmazonEFSCSIDriverPolicy \
+    --attach-policy-arn=arn:aws:iam::aws:policy/service-role/AmazonEFSCSIDriverPolicy \
     --approve \
     --override-existing-serviceaccounts
 
@@ -58,7 +58,12 @@ aws iam update-assume-role-policy --role-name $role_name --policy-document "$TRU
 
 echo "Updating helm charts"
 ./helm repo add eks https://aws.github.io/eks-charts
+./helm repo add aws-efs-csi-driver https://kubernetes-sigs.github.io/aws-efs-csi-driver
 ./helm repo update eks
+./helm repo update aws-efs-csi-driver
+
+echo "Installing aws-efs-csi-driver"
+./helm upgrade --install aws-efs-csi-driver --namespace kube-system aws-efs-csi-driver/aws-efs-csi-driver
 
 echo "Installing aws-load-balancer-controller with helm"
 ./helm install aws-load-balancer-controller eks/aws-load-balancer-controller \
