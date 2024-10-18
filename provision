@@ -1,8 +1,8 @@
 #!/bin/sh
 
 if [ "$#" -lt 4 ]; then
-            echo "Error!: usage $0 cluster_name aws_account region_name num_worker_nodes"
-            exit 1
+   echo "Error!: usage $0 cluster_name aws_account region_name num_worker_nodes"
+   exit 1
 fi
 
 cluster_name=$1
