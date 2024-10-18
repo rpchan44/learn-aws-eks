@@ -80,13 +80,13 @@ aws iam create-role \
     --approve
 
 ./eksctl create iamserviceaccount \
-  --cluster=$cluster_name \
-  --namespace=kube-system \
-  --name=aws-load-balancer-controller \
-  --role-name AmazonEKSLoadBalancerControllerRole \
-  --attach-policy-arn=arn:aws:iam::$account:policy/AWSLoadBalancerControllerIAMPolicy \
-  --approve \
-  --override-existing-serviceaccounts
+    --cluster=$cluster_name \
+    --namespace=kube-system \
+    --name=aws-load-balancer-controller \
+    --role-name AmazonEKSLoadBalancerControllerRole \
+    --attach-policy-arn=arn:aws:iam::$account:policy/AWSLoadBalancerControllerIAMPolicy \
+    --approve \
+    --override-existing-serviceaccounts
 
 echo "Phase #2 - HELM - press enter key to continue"
 read x
