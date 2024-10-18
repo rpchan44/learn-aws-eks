@@ -11,7 +11,6 @@ account=$2
 region=$3
 node=$4
 efs_role="AmazonEKS_EFS_CSI_DriverRole"
-
 echo "Creating cluster $cluster_name with AWS Account $account in region $region"
 echo "are you sure? (y/n)"
 read opt
@@ -25,7 +24,8 @@ fi
 oidc_id=$(aws eks describe-cluster --name $cluster_name --query "cluster.identity.oidc.issuer" --output text | cut -d '/' -f 5)
 
 ./eksctl utils associate-iam-oidc-provider --cluster $cluster_name --approve
-
+echo "Phase #1 - IAM Policy - press enter key to cotinue"
+read x
 cat <<EOF > aws-efs-csi-driver-trust-policy.json
 {
   "Version": "2012-10-17",
@@ -81,6 +81,8 @@ aws iam attach-role-policy \
   --approve \
   --override-existing-serviceaccounts
 
+echo "Phase #2 - HELM - press enter key to continue"
+read x
 echo "Updating helm charts"
 ./helm repo add eks https://aws.github.io/eks-charts
 ./helm repo add aws-efs-csi-driver https://kubernetes-sigs.github.io/aws-efs-csi-driver
