@@ -53,12 +53,16 @@ echo "Applying IAM Policy"
 curl -O https://raw.githubusercontent.com/kubernetes-sigs/aws-load-balancer-controller/v2.5.4/docs/install/iam_policy.json
 
 aws iam create-policy \
-    --policy-name AWSLoadBalancerControllerIAMPolicy \
-    --policy-document file://iam_policy.json
+   --policy-name AWSLoadBalancerControllerIAMPolicy \
+   --policy-document file://iam_policy.json
 
 aws iam create-role \
   --role-name $efs_role \
   --assume-role-policy-document file://aws-efs-csi-driver-trust-policy.json
+
+aws iam attach-role-policy \
+  --policy-arn arn:aws:iam::aws:policy/service-role/AmazonEFSCSIDriverPolicy \
+  --role-name $efs_role
 
 ./eksctl create iamserviceaccount \
     --cluster $cluster_name \
