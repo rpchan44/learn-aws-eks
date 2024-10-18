@@ -102,4 +102,15 @@ echo "Installing aws-load-balancer-controller with helm"
   --set region=$region
 
 echo "Invoking tech stack"
-kubectl apply -f .
+kubectl apply -f ingress.yaml
+kubectl apply -f service.yaml
+kubectl apply -f deployment.yaml
+kubectl apply -f efs-sc.yaml
+
+# don't touch below this point untested
+#kubectl apply -f pv-pvc.yaml
+#kubectl apply -f app_efs.yaml
+
+
+
+
