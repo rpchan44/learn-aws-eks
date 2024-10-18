@@ -68,9 +68,6 @@ aws iam create-role \
     --role-only \
     --attach-policy-arn arn:aws:iam::aws:policy/service-role/AmazonEFSCSIDriverPolicy \
     --approve
-TRUST_POLICY=$(aws iam get-role --role-name $efs_role --query 'Role.AssumeRolePolicyDocument' | \
-    sed -e 's/efs-csi-controller-sa/efs-csi-*/' -e 's/StringEquals/StringLike/')
-aws iam update-assume-role-policy --role-name $efs_role --policy-document "$TRUST_POLICY"
 
 ./eksctl create iamserviceaccount \
   --cluster=$cluster_name \
