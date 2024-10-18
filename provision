@@ -1,17 +1,18 @@
 #!/bin/sh
 
-if [ "$#" -lt 3 ]; then
-            echo "Error!: usage $0 cluster_name aws_account region_name"
+if [ "$#" -lt 4 ]; then
+            echo "Error!: usage $0 cluster_name aws_account region_name num_worker_nodes"
             exit 1
 fi
 
 cluster_name=$1
 account=$2
 region=$3
+node=$4
 
 echo "Creating cluster $cluster_name with AWS Account $account in region $region"
 
-./eksctl create cluster --name $cluster_name --region $region --nodegroup-name g1 --node-type t2.micro --nodes 4
+./eksctl create cluster --name $cluster_name --region $region --nodegroup-name g1 --node-type t2.micro --nodes $node
 oidc_id=$(aws eks describe-cluster --name $cluster_name --query "cluster.identity.oidc.issuer" --output text | cut -d '/' -f 5)
 echo "Your OIDC key $oidc_id"
 ./eksctl utils associate-iam-oidc-provider --cluster $cluster_name --approve
