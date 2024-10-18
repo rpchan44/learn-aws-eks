@@ -44,6 +44,17 @@ cat <<EOF > aws-efs-csi-driver-trust-policy.json
   ]
 }
 EOF
+cat <<EOF > efs-service-account.yam
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  labels:
+    app.kubernetes.io/name: aws-efs-csi-driver
+  name: efs-csi-controller-sa
+  namespace: kube-system
+  annotations:
+    eks.amazonaws.com/role-arn: arn:aws:iam::$account:role/AmazonEKS_EFS_CSI_DriverRole
+EOF
 
 echo "Applying IAM Policy"
 curl -O https://raw.githubusercontent.com/kubernetes-sigs/aws-load-balancer-controller/v2.5.4/docs/install/iam_policy.json
