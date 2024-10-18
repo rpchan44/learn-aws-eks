@@ -9,7 +9,7 @@ cluster_name=$1
 account=$2
 region=$3
 node=$4
-role_name=AmazonEKS_EFS_CSI_DriverRole
+efs_role="AmazonEKS_EFS_CSI_DriverRole"
 
 echo "Creating cluster $cluster_name with AWS Account $account in region $region"
 echo "are you sure? (y/n)"
@@ -22,7 +22,7 @@ fi
 
 ./eksctl create cluster --name $cluster_name --region $region --nodegroup-name g1 --node-type t2.micro --nodes $node
 oidc_id=$(aws eks describe-cluster --name $cluster_name --query "cluster.identity.oidc.issuer" --output text | cut -d '/' -f 5)
-echo "Your OIDC key $oidc_id"
+
 ./eksctl utils associate-iam-oidc-provider --cluster $cluster_name --approve
 
 cat <<EOF > aws-efs-csi-driver-trust-policy.json
@@ -54,18 +54,18 @@ aws iam create-policy \
     --policy-document file://iam_policy.json
 
 aws iam create-role \
-  --role-name AmazonEKS_EFS_CSI_DriverRole \
+  --role-name $efs_role \
   --assume-role-policy-document file://aws-efs-csi-driver-trust-policy.json
 
 aws iam attach-role-policy 
   --policy-arn arn:aws:iam::$account:policy/AmazonEKS_EFS_CSI_Driver_Policy 
-  --role-name AmazonEKS_EFS_CSI_DriverRole
+  --role-name $efs_role
 
 ./eksctl create iamserviceaccount \
     --name efs-csi-controller-sa \
     --namespace kube-system \
     --cluster $cluster_name \
-    --role-name $role_name \
+    --role-name $efs_role \
     --role-only \
     --attach-policy-arn arn:aws:iam::aws:policy/service-role/AmazonEFSCSIDriverPolicy \
     --approve
