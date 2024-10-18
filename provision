@@ -11,7 +11,6 @@ account=$2
 region=$3
 node=$4
 efs_role=AmazonEKS_EFS_CSI_DriverRole
-ebs_role=AmazonEKS_EBS_CSI_DriverRole
 
 echo "Creating cluster $cluster_name with AWS Account $account in region $region"
 echo "are you sure? (y/n)"
@@ -62,15 +61,6 @@ aws iam create-role \
   --assume-role-policy-document file://aws-efs-csi-driver-trust-policy.json
 
 ./eksctl create iamserviceaccount \
-    --name ebs-csi-controller-sa \
-    --namespace kube-system \
-    --cluster $cluster_name \
-    --region $region \
-    --role-name $ebs_role \
-    --attach-policy-arn arn:aws:iam::aws:policy/service-role/AmazonEBSCSIDriverPolicy \
-    --approve
-
-./eksctl create iamserviceaccount \
     --cluster $cluster_name \
     --namespace kube-system \
     --name efs-csi-controller-sa \
@@ -96,10 +86,10 @@ echo "Updating helm charts"
 ./helm repo update eks
 
 echo "Installing aws-efs-csi-driver"
-./eksctl create addon --name aws-ebs-csi-driver \
-   --cluster $cluster_name \ 
+./eksctl create addon --name aws-efs-csi-drive \
+   --cluster=$cluster_name \ 
    --region=$region \
-   --service-account-role-arn=arn:aws:iam::$account:role/$ebs_role \
+   --service-account-role-arn=arn:aws:iam::$account:role/$efs_role \
    --force
 
 echo "Installing aws-load-balancer-controller with helm"
