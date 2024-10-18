@@ -44,17 +44,6 @@ cat <<EOF > aws-efs-csi-driver-trust-policy.json
   ]
 }
 EOF
-cat <<EOF > efs-service-account.yam
-apiVersion: v1
-kind: ServiceAccount
-metadata:
-  labels:
-    app.kubernetes.io/name: aws-efs-csi-driver
-  name: efs-csi-controller-sa
-  namespace: kube-system
-  annotations:
-    eks.amazonaws.com/role-arn: arn:aws:iam::$account:role/AmazonEKS_EFS_CSI_DriverRole
-EOF
 
 echo "Applying IAM Policy"
 curl -O https://raw.githubusercontent.com/kubernetes-sigs/aws-load-balancer-controller/v2.5.4/docs/install/iam_policy.json
@@ -70,6 +59,19 @@ aws iam create-role \
 aws iam attach-role-policy 
   --policy-arn arn:aws:iam::$account:policy/AmazonEKS_EFS_CSI_Driver_Policy 
   --role-name AmazonEKS_EFS_CSI_DriverRole
+
+role_name=AmazonEKS_EFS_CSI_DriverRole
+eksctl create iamserviceaccount \
+    --name efs-csi-controller-sa \
+    --namespace kube-system \
+    --cluster $cluster_name \
+    --role-name $role_name \
+    --role-only \
+    --attach-policy-arn arn:aws:iam::aws:policy/service-role/AmazonEFSCSIDriverPolicy \
+    --approve
+TRUST_POLICY=$(aws iam get-role --role-name $role_name --query 'Role.AssumeRolePolicyDocument' | \
+    sed -e 's/efs-csi-controller-sa/efs-csi-*/' -e 's/StringEquals/StringLike/')
+aws iam update-assume-role-policy --role-name $role_name --policy-document "$TRUST_POLICY"
 
 ./eksctl create iamserviceaccount \
   --cluster=$cluster_name \
@@ -87,7 +89,11 @@ echo "Updating helm charts"
 ./helm repo update aws-efs-csi-driver
 
 echo "Installing aws-efs-csi-driver"
-./helm upgrade --install aws-efs-csi-driver --namespace kube-system aws-efs-csi-driver/aws-efs-csi-driver
+helm install aws-efs-csi-driver efs-csi-driver/efs-csi-driver \
+  --namespace kube-system \
+  --set controller.serviceAccount.create=false \
+  --set controller.serviceAccount.name=
+
 
 echo "Installing aws-load-balancer-controller with helm"
 ./helm install aws-load-balancer-controller eks/aws-load-balancer-controller \
