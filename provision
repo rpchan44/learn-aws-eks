@@ -67,7 +67,7 @@ aws iam attach-role-policy \
   --namespace=kube-system \
   --name=efs-csi-controller-sa \
   --role-name=$efs_role \
-  --attach-policy-arn=arn:aws:iam::aws:policy/service-role/$efs_role \
+  --attach-policy-arn=arn:aws:iam::aws:policy/service-role/AmazonEFSCSIDriverPolicy \
   --role-only \
   --approve \
   --override-existing-serviceaccounts
