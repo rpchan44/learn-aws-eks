@@ -24,6 +24,27 @@ fi
 ./eksctl create cluster --name $cluster_name --region $region --nodegroup-name g1 --node-type t2.micro --nodes $node
 oidc_id=$(aws eks describe-cluster --name $cluster_name --query "cluster.identity.oidc.issuer" --output text | cut -d '/' -f 5)
 
+cat <<EOF > aws-efs-csi-driver-trust-policy.json
+{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Effect": "Allow",
+      "Principal": {
+        "Federated": "arn:aws:iam::$account:oidc-provider/oidc.eks.$region.amazonaws.com/id/$oidc_id"
+      },
+      "Action": "sts:AssumeRoleWithWebIdentity",
+      "Condition": {
+        "StringLike": {
+          "oidc.eks.$region.amazonaws.com/id/$oidc_id:sub": "system:serviceaccount:kube-system:efs-csi-*",
+          "oidc.eks.$region.amazonaws.com/id/$oidc_id:aud": "sts.amazonaws.com"
+        }
+      }
+    }
+  ]
+}
+EOF
+
 ./eksctl utils associate-iam-oidc-provider --cluster $cluster_name --approve
 echo "Phase #1 - IAM Policy - press enter key to cotinue"
 read x
@@ -34,6 +55,10 @@ curl -O https://raw.githubusercontent.com/kubernetes-sigs/aws-load-balancer-cont
 aws iam create-policy \
     --policy-name AWSLoadBalancerControllerIAMPolicy \
     --policy-document file://iam_policy.json
+
+aws iam create-role \
+  --role-name $efs_role \
+  --assume-role-policy-document file://aws-efs-csi-driver-trust-policy.json
 
 ./eksctl create iamserviceaccount \
     --name efs-csi-controller-sa \
