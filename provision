@@ -104,15 +104,16 @@ echo "Installing aws-load-balancer-controller with helm"
   --set serviceAccount.name=aws-load-balancer-controller \
   --set region=$region
 
-echo "Invoking tech stack"
+echo "Defining Storage Class and Persistent Volume"
+kubectl apply -f efs-sc.yaml
+kubectl apply -f pv-pvc.yaml
+# don't touch below this point untested
+#kubectl apply -f app_efs.yaml
+
 #kubectl apply -f ingress.yaml
 #kubectl apply -f service.yaml
 #kubectl apply -f deployment.yaml
-kubectl apply -f efs-sc.yaml
 
-# don't touch below this point untested
-#kubectl apply -f pv-pvc.yaml
-#kubectl apply -f app_efs.yaml
 
 
 
