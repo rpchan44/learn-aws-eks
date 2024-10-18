@@ -2,6 +2,7 @@
 
 if [ "$#" -lt 4 ]; then
    echo "Error!: usage $0 cluster_name aws_account region_name num_worker_nodes"
+   echo "e.g $0 lab 026090510607 ap-southeast-1 2"
    exit 1
 fi
 
