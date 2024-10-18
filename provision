@@ -11,6 +11,13 @@ region=$3
 node=$4
 
 echo "Creating cluster $cluster_name with AWS Account $account in region $region"
+echo "are you sure? (y/n)"
+read opt
+
+if [ "$opt" != "Y" ] && [ "$opt" != "y" ]; then
+    echo "Great!"
+    exit 1
+fi
 
 ./eksctl create cluster --name $cluster_name --region $region --nodegroup-name g1 --node-type t2.micro --nodes $node
 oidc_id=$(aws eks describe-cluster --name $cluster_name --query "cluster.identity.oidc.issuer" --output text | cut -d '/' -f 5)
