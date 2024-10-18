@@ -58,9 +58,9 @@ aws iam create-role \
   --role-name $efs_role \
   --assume-role-policy-document file://aws-efs-csi-driver-trust-policy.json
 
-aws iam attach-role-policy \
-  --policy-arn arn:aws:iam::aws:policy/service-role/AmazonEFSCSIDriverPolicy \
-  --role-name $efs_role
+#aws iam attach-role-policy \
+#  --policy-arn arn:aws:iam::aws:policy/service-role/AmazonEFSCSIDriverPolicy \
+#  --role-name $efs_role
 
 ./eksctl create iamserviceaccount \
   --cluster=$cluster_name \
