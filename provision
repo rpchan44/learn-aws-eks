@@ -94,11 +94,13 @@ read x
 echo "Updating helm charts"
 ./helm repo add eks https://aws.github.io/eks-charts
 ./helm repo update eks
+
 echo "Installing aws-efs-csi-driver"
 ./eksctl create addon --name aws-ebs-csi-driver \
    --cluster $cluster_name \ 
-   --region=${region} \
-   --service-account-role-arn arn:aws:iam::$account:role/$ebs_role --force
+   --region=$region \
+   --service-account-role-arn=arn:aws:iam::$account:role/$ebs_role \
+   --force
 
 echo "Installing aws-load-balancer-controller with helm"
 ./helm install aws-load-balancer-controller eks/aws-load-balancer-controller \
