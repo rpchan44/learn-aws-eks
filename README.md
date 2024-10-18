@@ -21,7 +21,7 @@ helm installed into ../helm </br>
 [cloudshell-user@ip-10-132-11-60 scripts]$ cd .. </br>
 [cloudshell-user@ip-10-132-11-60 learn-aws-eks]$ chmod +x provision </br>
 [cloudshell-user@ip-10-132-11-60 learn-aws-eks]$ ./provision </br>
-<b>Error!: usage ./provision cluster_name aws_account region_name </b></br>
+<b>Error!: usage ./provision cluster_name aws_account region_name num_worker_nodes</b></br>
 [cloudshell-user@ip-10-132-11-60 learn-aws-eks]$
 
 ## TODO
