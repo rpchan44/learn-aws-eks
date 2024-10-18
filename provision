@@ -87,11 +87,7 @@ echo "Updating helm charts"
 ./helm repo update aws-efs-csi-driver
 
 echo "Installing aws-efs-csi-driver"
-./helm install aws-efs-csi-driver \
-  --namespace kube-system \
-  --set controller.serviceAccount.create=false \
-  --set controller.serviceAccount.name=efs-csi-controller-sa
-  --set region=$region
+./eksctl get addon --name aws-efs-csi-driver --cluster $cluster_name --region=$region
 
 echo "Installing aws-load-balancer-controller with helm"
 ./helm install aws-load-balancer-controller eks/aws-load-balancer-controller \
