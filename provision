@@ -24,11 +24,41 @@ oidc_id=$(aws eks describe-cluster --name $cluster_name --query "cluster.identit
 echo "Your OIDC key $oidc_id"
 ./eksctl utils associate-iam-oidc-provider --cluster $cluster_name --approve
 
+cat <<EOF > aws-efs-csi-driver-trust-policy.json
+{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Effect": "Allow",
+      "Principal": {
+        "Federated": "arn:aws:iam::$account:oidc-provider/oidc.eks.region-code.amazonaws.com/id/$oidc_id"
+      },
+      "Action": "sts:AssumeRoleWithWebIdentity",
+      "Condition": {
+        "StringLike": {
+          "oidc.eks.region-code.amazonaws.com/id/$oidc_id:sub": "system:serviceaccount:kube-system:efs-csi-*",
+          "oidc.eks.region-code.amazonaws.com/id/$oidc_id:aud": "sts.amazonaws.com"
+        }
+      }
+    }
+  ]
+}
+EOF
+
 echo "Applying IAM Policy"
 curl -O https://raw.githubusercontent.com/kubernetes-sigs/aws-load-balancer-controller/v2.5.4/docs/install/iam_policy.json
+
 aws iam create-policy \
     --policy-name AWSLoadBalancerControllerIAMPolicy \
     --policy-document file://iam_policy.json
+
+aws iam create-role \
+  --role-name AmazonEKS_EFS_CSI_DriverRole \
+  --assume-role-policy-document file://"aws-efs-csi-driver-trust-policy.json"
+
+aws iam attach-role-policy \
+  --policy-arn arn:aws:iam::aws:policy/service-role/AmazonEFSCSIDriverPolicy \
+  --role-name AmazonEKS_EFS_CSI_DriverRole
 
 ./eksctl create iamserviceaccount \
   --cluster=$cluster_name \
@@ -38,23 +68,6 @@ aws iam create-policy \
   --attach-policy-arn=arn:aws:iam::$account:policy/AWSLoadBalancerControllerIAMPolicy \
   --approve \
   --override-existing-serviceaccounts
-
-role_name="AmazonEKS_EFS_CSI_DriverRole"
-./eksctl create iamserviceaccount \
-    --name efs-csi-controller-sa \
-    --namespace kube-system \
-    --cluster $cluster_name \
-    --role-name $role_name \
-    --role-only \
-    --attach-policy-arn=arn:aws:iam::aws:policy/service-role/AmazonEFSCSIDriverPolicy \
-    --approve \
-    --override-existing-serviceaccounts
-
-TRUST_POLICY=$(aws iam get-role --role-name $role_name --query 'Role.AssumeRolePolicyDocument' | \
-    sed -e 's/efs-csi-controller-sa/efs-csi-*/' -e 's/StringEquals/StringLike/')
-aws iam update-assume-role-policy --role-name $role_name --policy-document "$TRUST_POLICY"
-
-
 
 echo "Updating helm charts"
 ./helm repo add eks https://aws.github.io/eks-charts
