@@ -80,12 +80,10 @@ aws iam create-role \
 
 echo "Phase #2 - HELM - press enter key to continue"
 read x
+
 echo "Updating helm charts"
 ./helm repo add eks https://aws.github.io/eks-charts
-./helm repo add aws-efs-csi-driver https://kubernetes-sigs.github.io/aws-efs-csi-driver
 ./helm repo update eks
-./helm repo update aws-efs-csi-driver
-
 echo "Installing aws-efs-csi-driver"
 ./eksctl get addon --name aws-efs-csi-driver --cluster $cluster_name --region=$region
 
@@ -98,9 +96,9 @@ echo "Installing aws-load-balancer-controller with helm"
   --set region=$region
 
 echo "Invoking tech stack"
-kubectl apply -f ingress.yaml
-kubectl apply -f service.yaml
-kubectl apply -f deployment.yaml
+#kubectl apply -f ingress.yaml
+#kubectl apply -f service.yaml
+#kubectl apply -f deployment.yaml
 kubectl apply -f efs-sc.yaml
 
 # don't touch below this point untested
