@@ -61,9 +61,9 @@ aws iam create-role \
   --assume-role-policy-document file://aws-efs-csi-driver-trust-policy.json
 
 ./eksctl create iamserviceaccount \
-    --name efs-csi-controller-sa \
-    --namespace kube-system \
     --cluster $cluster_name \
+    --namespace kube-system \
+    --name efs-csi-controller-sa \
     --role-name $efs_role \
     --role-only \
     --attach-policy-arn arn:aws:iam::aws:policy/service-role/AmazonEFSCSIDriverPolicy \
