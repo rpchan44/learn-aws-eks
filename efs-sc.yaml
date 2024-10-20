@@ -5,16 +5,22 @@ metadata:
   name: efs-sc
   namespace: kube-system
 provisioner: efs.csi.aws.com
-volumeBindingMode: WaitForFirstConsumer
-allowVolumeExpansion: true
-reclaimPolicy : Retain
-parameters:
-  provisioningMode: efs-ap
-  fileSystemId: fs-01a4742b267c986bd
-  directoryPerms: "700"
-  gidRangeStart: "1000"
-  gidRangeEnd: "2000"
-  basePath: "/data"
+
+---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: efs-pv
+spec:
+  capacity:
+    storage: 5Gi  # Specify the storage capacity
+  accessModes:
+    - ReadWriteMany  # EFS supports ReadWriteMany access mode
+  persistentVolumeReclaimPolicy: Retain  # Policy for reclaiming the volume
+  storageClassName: efs-sc  # Reference to a storage class if you have one
+  csi:  # Using the Container Storage Interface
+    driver: efs.csi.aws.com  # EFS CSI driver
+    volumeHandle: fs-01a4742b267c986bd # Replace with your EFS file system ID
 
 ---
 apiVersion: v1
