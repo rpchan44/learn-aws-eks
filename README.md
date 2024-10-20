@@ -37,17 +37,6 @@ CLI cheat sheets
 `Resizing nodegroup if you need more capacity`</br>
 <b>./eksctl --cluster lab scale nodegroup --name g1 --nodes-max 6 --nodes 4
 
-## Validation 
-[cloudshell-user@ip-10-130-51-66 learn-aws-eks]$ kubectl get storageclass -n kube-system </br>
-NAME     PROVISIONER             RECLAIMPOLICY   VOLUMEBINDINGMODE      ALLOWVOLUMEEXPANSION   AGE </br>
-efs-sc   efs.csi.aws.com         Retain          Immediate              true                   79m </br>
-gp2      kubernetes.io/aws-ebs   Delete          WaitForFirstConsumer   false                  122m </br>
-
-[cloudshell-user@ip-10-130-51-66 learn-aws-eks]$ kubectl get pvc -n kube-system </br>
-NAME      STATUS   VOLUME                                     CAPACITY   ACCESS MODES   STORAGECLASS   VOLUMEATTRIBUTESCLASS   AGE </br>
-efs-pvc   Bound    pvc-817a8d2d-ee44-4cf6-82ce-b1a27270fb94   5Gi        RWX            efs-sc         <unset>                 81m </br>
-[cloudshell-user@ip-10-130-51-66 learn-aws-eks]$ </br>
-
 ## Pre-requisite and assumption
 
 Contact AWS support and activate your cloudshell or setup your own environment to have kubectl / helm and eksctl install on your computer
