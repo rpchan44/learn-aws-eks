@@ -34,7 +34,7 @@ PODS persistent volumes with efs </br>
 CLI cheat sheets
 
 `Resizing nodegroup if you need more capacity`</br>
-<b>./eksctl --cluster lab scale nodegroup --name g1 --nodes-max 4 --nodes 3
+<b>./eksctl --cluster lab scale nodegroup --name g1 --nodes-max 6 --nodes 4
 
 ## RESEARCH and Validation phase
 Installing efs-csi driver using helm</br>
