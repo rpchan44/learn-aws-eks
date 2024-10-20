@@ -38,7 +38,6 @@ CLI cheat sheets
 <b>./eksctl --cluster lab scale nodegroup --name g1 --nodes-max 6 --nodes 4
 
 ## Validation 
-
 [cloudshell-user@ip-10-130-51-66 learn-aws-eks]$ kubectl get storageclass -n kube-system </br>
 NAME     PROVISIONER             RECLAIMPOLICY   VOLUMEBINDINGMODE      ALLOWVOLUMEEXPANSION   AGE </br>
 efs-sc   efs.csi.aws.com         Retain          Immediate              true                   79m </br>
