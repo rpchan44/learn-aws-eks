@@ -30,14 +30,12 @@ helm installed into ../helm </br>
 ## TODO
 
 PODS to outside world integration like RDS </br>
-PODS persistent volumes with efs </br>
+Polishing demo apps
 CLI cheat sheets
 
+## Scale nodegroups to your hearts content with destroying the whole cluster
 `Resizing nodegroup if you need more capacity`</br>
 <b>./eksctl --cluster lab scale nodegroup --name g1 --nodes-max 6 --nodes 4
-
-## RESEARCH and Validation phase
-Installing efs-csi driver using helm</br>
 
 ## Pre-requisite and assumption
 
