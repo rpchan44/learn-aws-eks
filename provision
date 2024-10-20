@@ -105,8 +105,8 @@ echo "Installing aws-load-balancer-controller with helm"
   --set region=$region
 
 echo "Defining Storage Class and Persistent Volume"
-kubectl apply -f efs-sc.yaml
-kubectl apply -f pv-pvc.yaml
+#kubectl apply -f efs-sc.yaml
+#kubectl apply -f pv-pvc.yaml
 # don't touch below this point untested
 #kubectl apply -f app_efs.yaml
 
