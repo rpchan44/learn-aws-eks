@@ -5,7 +5,6 @@ metadata:
   name: efs-sc
   namespace: kube-system
 provisioner: efs.csi.aws.com
-volumeBindingMode: WaitForFirstConsumer
 allowVolumeExpansion: true
 reclaimPolicy : Retain
 mountOptions:
