@@ -57,3 +57,7 @@ Default output format [None]: json
 
 ```
 Always terminate your AWS eks after use this is a 4 worker nodes so expect a bill please setup your AWS Budget to a decent amount like 5 to 10 USD
+
+![Screenshot 1](https://github.com/rpchan44/learn-aws-eks/blob/main/images/1.png)
+![Screenshot 2](https://github.com/rpchan44/learn-aws-eks/blob/main/images/2.png)
+![Screenshot 3](https://github.com/rpchan44/learn-aws-eks/blob/main/images/3.png)
