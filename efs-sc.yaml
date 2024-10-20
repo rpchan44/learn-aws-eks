@@ -8,8 +8,6 @@ provisioner: efs.csi.aws.com
 volumeBindingMode: WaitForFirstConsumer
 allowVolumeExpansion: true
 reclaimPolicy : Retain
-mountOptions:
-  - tls
 parameters:
   provisioningMode: efs-ap
   fileSystemId: fs-01a4742b267c986bd
