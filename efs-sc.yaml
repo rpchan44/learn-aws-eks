@@ -23,7 +23,7 @@ apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
   name: efs-pvc
-  namespace: hktech
+  namespace: kube-system
 spec:
   accessModes:
     - ReadWriteMany
