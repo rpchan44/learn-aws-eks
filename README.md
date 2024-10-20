@@ -5,6 +5,9 @@ you are going to have an excruciating pain on setting it up which is a good thin
 
 I'm going to update this repository from time to time
 
+## Reminder please remove AWS config on your account this cost a lot 
+aws configservice delete-configuration-recorder --configuration-recorder-name default --region ap-southeast-1
+
 ## BOOTSTRAPING
 
 clone this repository run both shell scripts located at scripts folder then execute provision script and supplied appropriate parameters match to your environment</br></br>
