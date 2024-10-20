@@ -27,3 +27,4 @@ spec:
   storageClassName: efs-pv
   resources:
     requests:
+      storage: 5Gi
