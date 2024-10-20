@@ -33,7 +33,7 @@ PODS to outside world integration like RDS </br>
 Polishing demo apps
 CLI cheat sheets
 
-## Scale nodegroups to your hearts content with destroying the whole cluster
+## Scale nodegroups to your hearts content without destroying the whole cluster
 `Resizing nodegroup if you need more capacity`</br>
 <b>./eksctl --cluster lab scale nodegroup --name g1 --nodes-max 6 --nodes 4
 
