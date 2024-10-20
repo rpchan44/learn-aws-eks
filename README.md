@@ -30,8 +30,8 @@ helm installed into ../helm </br>
 ## TODO
 
 PODS to outside world integration like RDS </br>
-Polishing demo apps
-CLI cheat sheets
+Polishing demo apps </br>
+CLI nuggest </br>
 
 ## Scale nodegroups to your hearts content without destroying the whole cluster
 `Resizing nodegroup if you need more capacity`</br>
@@ -43,7 +43,8 @@ Contact AWS support and activate your cloudshell or setup your own environment t
 
 You need to configure your aws cli tools together with your Access and Secret key otherwise the userland tools won't be work this is important if you use cloudshell you don't have to do this
 
-The EKS cluster will be named "lab" and will be place in ap-southeast-1 (Singapore) and the nodegroup will be called "g1"
+The EKS cluster will be named "lab" and will be place in ap-southeast-1 (Singapore) and the nodegroup will be called "g1" and the minimum worker nodes should be aroudn 5 to 6 trust me </br>
+I spend the whole time debugging,pulling my hair and figuring out why it doesn't work and I found out that my efs-controller needs at least 4 pods </br> 
 
 If you need help just give me a shout!
 
