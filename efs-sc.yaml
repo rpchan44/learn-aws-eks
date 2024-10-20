@@ -2,7 +2,7 @@
 kind: StorageClass
 apiVersion: storage.k8s.io/v1
 metadata:
-  name: efs-pv
+  name: efs-sc
   namespace: kube-system
 provisioner: efs.csi.aws.com
 volumeBindingMode: WaitForFirstConsumer
@@ -27,7 +27,7 @@ metadata:
 spec:
   accessModes:
     - ReadWriteMany
-  storageClassName: efs-pv
+  storageClassName: efs-sc
   resources:
     requests:
       storage: 5Gi
