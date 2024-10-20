@@ -22,7 +22,7 @@ parameters:
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
-  name: efs-pv
+  name: efs-pvc
   namespace: kube-system
 spec:
   accessModes:
