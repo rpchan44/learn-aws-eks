@@ -7,15 +7,10 @@ metadata:
 provisioner: efs.csi.aws.com
 allowVolumeExpansion: true
 reclaimPolicy : Retain
-mountOptions:
-  - tls
 parameters:
   provisioningMode: efs-ap
   fileSystemId: fs-01a4742b267c986bd
   directoryPerms: "700"
-  gidRangeStart: "1000"
-  gidRangeEnd: "2000"
-  basePath: "/data"
 
 ---
 apiVersion: v1
@@ -29,4 +24,4 @@ spec:
   storageClassName: efs-sc
   resources:
     requests:
-      storage: 5Gi
+      storage: 1Gi
