@@ -62,3 +62,4 @@ Always terminate your AWS eks after use this is a 4 worker nodes so expect a bil
 ![Screenshot 1](https://github.com/rpchan44/learn-aws-eks/blob/master/images/1.png)
 ![Screenshot 2](https://github.com/rpchan44/learn-aws-eks/blob/master/images/2.PNG)
 ![Screenshot 3](https://github.com/rpchan44/learn-aws-eks/blob/master/images/3.PNG)
+![Screenshot 4](https://github.com/rpchan44/learn-aws-eks/blob/master/images/4.PNG)
