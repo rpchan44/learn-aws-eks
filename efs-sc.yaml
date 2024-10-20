@@ -10,7 +10,7 @@ mountOptions:
   - tls
 parameters:
   provisioningMode: efs-ap
-  fileSystemId: fs-51500hktech2023
+  fileSystemId: <fs-filesytemid>
   directoryPerms: "700"
   gidRangeStart: "1000"
   gidRangeEnd: "2000"
