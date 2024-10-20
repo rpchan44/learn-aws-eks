@@ -33,6 +33,9 @@ PODS to outside world integration like RDS </br>
 PODS persistent volumes with efs </br>
 CLI cheat sheets
 
+Resizing nodegroup if you need more capacity
+./eksctl --cluster lab scale nodegroup --name g1 --nodes-max 4 --nodes 3
+
 ## RESEARCH and Validation phase
 Installing efs-csi driver using helm</br>
 
